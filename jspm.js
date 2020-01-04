@@ -1,6 +1,6 @@
-const JSPM = {
-  fetch : (pkgname) => {
-    
+class JSPM {
+  constructor () {
+    fetch()
   }
 }
 
