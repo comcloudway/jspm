@@ -10,7 +10,14 @@
 <body>
   <script type="module">
     import {JSPM} from "./jspm.js"
-    JSPM.init()
+    JSPM.init().then(()=>{
+      
+    JSPM.findInRepo("jshell").then(r=>{
+      JSPM.require("jshell").then(x=>{
+        console.log(x)
+      })
+    })
+    })
   </script>
 
 </body>
