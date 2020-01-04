@@ -93,6 +93,9 @@ const JSPM = {
             pos.push([repo, list, rc[repo]-1]);
           }
           if (rc[repo]==rl[repo]) {
+            if(pos.length==0) {
+              reject('ERROR: No Package found');
+            }
             resolve(pos);
           }
         }
@@ -134,9 +137,9 @@ const JSPM = {
           //package has dependencies
         } else {
           // no deps import package now 
-          resolve({[pkg.id]:import(pkg.src)})
+          resolve({[pkg.id]:import(pkg.src)});
         }
-      })
+      });
     });
   }
 };
