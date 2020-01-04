@@ -1,7 +1,5 @@
 {
-  "local": [
-    "repo1"
-    ],
-    "ext": [
-      ]
+ "repos": {
+   "repo1":"https://raw.githubusercontent.com/comcloudway/jspm/master/repos/repo1.json"
+ }
 }
