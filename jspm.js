@@ -135,8 +135,21 @@ const JSPM = {
         
         if (pkg.deps.length>0) {
           //package has dependencies
+          let app = {};
+          let z = new Promise((res, rej) => {
+             for (let d of pkg.deps) {
+            JSPM.require(d,select);
+          }
+          });
+          z.then(state=>{
+            resolve(app);
+          });
         } else {
           // no deps import package now 
+          
+          //import package
+          
+          
           resolve({[pkg.id]:import(pkg.src)});
         }
       });
