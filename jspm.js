@@ -128,27 +128,30 @@ const JSPM = {
     });
     });
   },
+  pkglist:[],
   require: (pkgname, select) => {
+    
     return new Promise((resolve, reject) => {
+      if (JSPM.pkglist.indexOf(pkgname)==-1){
       JSPM.fetch(pkgname,select)
       .then(pkg=>{
         let c = -1;
         if (pkg.deps.length>0) {
           //package has dependencies
-          let app = {};
+          
           let z = new Promise((res, rej) => {
              for (let d of pkg.deps) {
             JSPM.require(d,select);
+            res();
           }
           });
-          z.then(state=>{
-            res();
-          });
+          
         } else {
           // no deps import package now 
           c++;
           //import package
-          console.log("Starting import of package (id): "+ pkg.id);
+          
+             console.log("Starting import of package (id): "+ pkg.id);
           
           let tag = document.createElement("script");
           tag.type="application/javascript";
@@ -158,14 +161,20 @@ const JSPM = {
           .then(js=>{
             tag.innerHTML=js;
             document.body.appendChild(tag);
+            JSPM.pkglist.push(pkgname);
+            console.log(JSPM.pkglist)
             console.log("Finished import package (id): " + pkg.id);
             if(c==pkg.deps.length) {
               resolve();
             }
           });
-          
         }
-      });
+        });
+        } else {
+          console.log("Package "+pkgname+" already imported");
+        }
+        
+      
     });
   }
 };
