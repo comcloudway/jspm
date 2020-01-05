@@ -132,7 +132,7 @@ const JSPM = {
     return new Promise((resolve, reject) => {
       JSPM.fetch(pkgname,select)
       .then(pkg=>{
-        
+        let c = -1;
         if (pkg.deps.length>0) {
           //package has dependencies
           let app = {};
@@ -142,19 +142,31 @@ const JSPM = {
           }
           });
           z.then(state=>{
-            resolve(app);
+            res();
           });
         } else {
           // no deps import package now 
-          
+          c++;
           //import package
+          console.log("Starting import of package (id): "+ pkg.id);
           
+          let tag = document.createElement("script");
+          tag.type="application/javascript";
           
-          resolve({[pkg.id]:import(pkg.src)});
+          fetch(pkg.src,{mode:'cors'})
+          .then(r=>r.text())
+          .then(js=>{
+            tag.innerHTML=js;
+            document.body.appendChild(tag);
+            console.log("Finished import package (id): " + pkg.id);
+            if(c==pkg.deps.length) {
+              resolve();
+            }
+          });
+          
         }
       });
     });
   }
 };
 
-export { JSPM };

@@ -8,13 +8,14 @@
 </head>
 
 <body>
-  <script type="module">
-    import {JSPM} from "./jspm.js"
+  <script src="jspm.js"></script>
+  <script>
+    
     JSPM.init().then(()=>{
       
     JSPM.findInRepo("jshell").then(r=>{
       JSPM.require("jshell").then(x=>{
-        console.log(JSON.stringify(x))
+        console.log(JSON.stringify(JSHell))
       })
     })
     })
